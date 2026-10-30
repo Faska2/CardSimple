@@ -49,15 +49,21 @@
       <section class="contact-actions-section" aria-label="Quick Contact Actions">
         <div class="contact-buttons-row">
           
-          <!-- Phone Call Button -->
-          <a id="btn-phone" href="#" class="contact-circle-btn" aria-label="Phone Call" title="Call">
-            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect>
-              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          <!-- 1. LinkedIn Button -->
+          <a id="btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="contact-circle-btn" aria-label="LinkedIn Profile" title="LinkedIn">
+            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
           </a>
 
-          <!-- Email Button -->
+          <!-- 2. WhatsApp Button -->
+          <a id="btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="contact-circle-btn" aria-label="Chat on WhatsApp" title="WhatsApp">
+            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.69 12.05 3.69C14.25 3.69 16.31 4.55 17.87 6.11C19.42 7.67 20.28 9.73 20.28 11.93C20.28 16.47 16.59 20.15 12.05 20.15ZM16.56 14.36C16.31 14.24 15.09 13.64 14.86 13.56C14.64 13.47 14.47 13.43 14.31 13.68C14.14 13.92 13.67 14.48 13.53 14.64C13.38 14.8 13.24 14.82 12.99 14.7C12.74 14.58 11.94 14.31 11 13.47C10.26 12.82 9.77 12.01 9.62 11.76C9.48 11.52 9.6 11.38 9.73 11.26C9.84 11.15 9.98 10.97 10.1 10.83C10.23 10.69 10.27 10.59 10.35 10.43C10.43 10.26 10.39 10.12 10.33 10C10.27 9.88 9.77 8.65 9.57 8.15C9.37 7.66 9.17 7.73 9.02 7.72C8.88 7.71 8.71 7.71 8.55 7.71C8.38 7.71 8.12 7.77 7.89 8.02C7.67 8.27 7.04 8.86 7.04 10.06C7.04 11.27 7.92 12.43 8.04 12.59C8.16 12.76 9.76 15.22 12.22 16.29C12.81 16.54 13.26 16.69 13.62 16.81C14.21 17 14.74 16.97 15.17 16.91C15.65 16.84 16.64 16.31 16.85 15.72C17.05 15.14 17.05 14.64 16.99 14.54C16.93 14.44 16.81 14.48 16.56 14.36Z"/>
+            </svg>
+          </a>
+
+          <!-- 3. Email Button -->
           <a id="btn-email" href="#" class="contact-circle-btn" aria-label="Send Email" title="Email">
             <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="5" width="18" height="14" rx="2"></rect>
@@ -65,7 +71,7 @@
             </svg>
           </a>
 
-          <!-- SMS Message Button -->
+          <!-- 4. SMS Message Button -->
           <a id="btn-sms" href="#" class="contact-circle-btn" aria-label="Send SMS" title="Message">
             <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -74,17 +80,11 @@
             </svg>
           </a>
 
-          <!-- WhatsApp Button -->
-          <a id="btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="contact-circle-btn" aria-label="Chat on WhatsApp" title="WhatsApp">
-            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.69 12.05 3.69C14.25 3.69 16.31 4.55 17.87 6.11C19.42 7.67 20.28 9.73 20.28 11.93C20.28 16.47 16.59 20.15 12.05 20.15ZM16.56 14.36C16.31 14.24 15.09 13.64 14.86 13.56C14.64 13.47 14.47 13.43 14.31 13.68C14.14 13.92 13.67 14.48 13.53 14.64C13.38 14.8 13.24 14.82 12.99 14.7C12.74 14.58 11.94 14.31 11 13.47C10.26 12.82 9.77 12.01 9.62 11.76C9.48 11.52 9.6 11.38 9.73 11.26C9.84 11.15 9.98 10.97 10.1 10.83C10.23 10.69 10.27 10.59 10.35 10.43C10.43 10.26 10.39 10.12 10.33 10C10.27 9.88 9.77 8.65 9.57 8.15C9.37 7.66 9.17 7.73 9.02 7.72C8.88 7.71 8.71 7.71 8.55 7.71C8.38 7.71 8.12 7.77 7.89 8.02C7.67 8.27 7.04 8.86 7.04 10.06C7.04 11.27 7.92 12.43 8.04 12.59C8.16 12.76 9.76 15.22 12.22 16.29C12.81 16.54 13.26 16.69 13.62 16.81C14.21 17 14.74 16.97 15.17 16.91C15.65 16.84 16.64 16.31 16.85 15.72C17.05 15.14 17.05 14.64 16.99 14.54C16.93 14.44 16.81 14.48 16.56 14.36Z"/>
-            </svg>
-          </a>
-
-          <!-- LinkedIn Button -->
-          <a id="btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="contact-circle-btn" aria-label="LinkedIn Profile" title="LinkedIn" style="display: none;">
-            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          <!-- 5. Phone Call Button -->
+          <a id="btn-phone" href="#" class="contact-circle-btn" aria-label="Phone Call" title="Call">
+            <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
             </svg>
           </a>
 
