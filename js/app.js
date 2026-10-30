@@ -242,10 +242,10 @@ function renderProfile() {
  * Initializes Core Action Listeners (Add to Contact, Share Profile).
  */
 function initActions() {
-  // 1. Add to Contact (.vcf generation)
+  // 1. Add to Contact (Opens native Contacts app on phone)
   const addContactBtn = document.getElementById("btn-add-contact");
   if (addContactBtn) {
-    addContactBtn.addEventListener("click", downloadVCard);
+    addContactBtn.addEventListener("click", addToContacts);
   }
 
   // 2. Share Profile Button
@@ -256,37 +256,95 @@ function initActions() {
 }
 
 /**
- * Generates and downloads a standard .vcf vCard 3.0 file.
+ * Directly opens the Phone's native Contacts app to add this person.
+ * - Android: Launches the Contacts app via Android Intent (action.INSERT).
+ * - iOS: Directly opens the native Contact Card sheet (text/vcard stream).
+ * - Desktop fallback: Opens or downloads the standardized .vcf card.
  */
-function downloadVCard() {
-  const nameParts = (profile.fullName || "Contact").trim().split(" ");
+async function addToContacts() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera || "";
+  const isAndroid = /android/i.test(userAgent);
+  const isIOS = (/iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) && !window.MSStream;
+
+  const cleanName = (profile.fullName || "").trim();
+  const cleanPhone = (profile.phone || "").replace(/[^\d+]/g, "");
+  const cleanEmail = (profile.email || "").trim();
+  const cleanCompany = (profile.company || "").trim();
+  const cleanJob = (profile.jobTitle || "").trim();
+  const cleanAddress = (profile.address || "").trim();
+  const cleanNotes = (profile.biography || "").trim();
+  const cleanWebsite = (profile.website || "").trim();
+
+  // 1. ANDROID: Launch native Contacts App directly via Chrome Intent
+  if (isAndroid) {
+    try {
+      showToast("Opening Contacts app...");
+      let intentUri = "intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;";
+      if (cleanName) intentUri += `S.name=${encodeURIComponent(cleanName)};`;
+      if (cleanPhone) intentUri += `S.phone=${encodeURIComponent(cleanPhone)};`;
+      if (cleanEmail) intentUri += `S.email=${encodeURIComponent(cleanEmail)};`;
+      if (cleanCompany) intentUri += `S.company=${encodeURIComponent(cleanCompany)};`;
+      if (cleanJob) intentUri += `S.job_title=${encodeURIComponent(cleanJob)};`;
+      if (cleanAddress) intentUri += `S.postal=${encodeURIComponent(cleanAddress)};`;
+      if (cleanNotes) intentUri += `S.notes=${encodeURIComponent(cleanNotes)};`;
+      intentUri += "end";
+
+      window.location.href = intentUri;
+      return;
+    } catch (err) {
+      console.warn("Android intent failed, falling back to vCard:", err);
+    }
+  }
+
+  // Build standard vCard 3.0 string
+  const nameParts = cleanName.split(" ");
   const firstName = nameParts[0] || "";
   const lastName = nameParts.slice(1).join(" ") || "";
 
-  // Split address into components if available
-  const addressLine = (profile.address || "").trim();
-
-  // Build standard vCard 3.0 string
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN;CHARSET=UTF-8:${escapeVCard(profile.fullName || "")}`,
+    `FN;CHARSET=UTF-8:${escapeVCard(cleanName)}`,
     `N;CHARSET=UTF-8:${escapeVCard(lastName)};${escapeVCard(firstName)};;;`,
-    profile.jobTitle ? `TITLE;CHARSET=UTF-8:${escapeVCard(profile.jobTitle)}` : "",
-    profile.company ? `ORG;CHARSET=UTF-8:${escapeVCard(profile.company)}` : "",
-    profile.phone ? `TEL;TYPE=CELL,VOICE:${profile.phone.replace(/\s+/g, "")}` : "",
-    profile.email ? `EMAIL;TYPE=WORK,INTERNET:${profile.email.trim()}` : "",
-    profile.website ? `URL:${profile.website.trim()}` : "",
-    addressLine ? `ADR;TYPE=WORK;CHARSET=UTF-8:;;;${escapeVCard(addressLine)};;;` : "",
-    profile.biography ? `NOTE;CHARSET=UTF-8:${escapeVCard(profile.biography)}` : "",
+    cleanJob ? `TITLE;CHARSET=UTF-8:${escapeVCard(cleanJob)}` : "",
+    cleanCompany ? `ORG;CHARSET=UTF-8:${escapeVCard(cleanCompany)}` : "",
+    cleanPhone ? `TEL;TYPE=CELL,VOICE:${cleanPhone}` : "",
+    cleanEmail ? `EMAIL;TYPE=WORK,INTERNET:${cleanEmail}` : "",
+    cleanWebsite ? `URL:${cleanWebsite}` : "",
+    cleanAddress ? `ADR;TYPE=WORK;CHARSET=UTF-8:;;;${escapeVCard(cleanAddress)};;;` : "",
+    cleanNotes ? `NOTE;CHARSET=UTF-8:${escapeVCard(cleanNotes)}` : "",
     `REV:${new Date().toISOString()}`,
     "END:VCARD"
   ].filter(Boolean).join("\r\n");
 
-  const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-  const filename = `${(profile.fullName || "contact").replace(/[^a-zA-Z0-9_-]/g, "_")}.vcf`;
+  // 2. iOS (iPhone/iPad): Open native iOS Contact Card directly
+  if (isIOS) {
+    showToast("Opening Contact card...");
+    const dataUri = `data:text/vcard;charset=utf-8,${encodeURIComponent(vcard)}`;
+    window.location.href = dataUri;
+    return;
+  }
 
-  // Trigger file download
+  // 3. Web Share API with File (Mobile devices supporting file share to Contacts)
+  if (navigator.canShare) {
+    try {
+      const file = new File([vcard], `${cleanName.replace(/\s+/g, "_")}.vcf`, { type: "text/vcard" });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: cleanName,
+          text: `Add ${cleanName} to contacts`
+        });
+        return;
+      }
+    } catch (e) {
+      if (e.name === "AbortError") return;
+    }
+  }
+
+  // 4. Desktop / Universal Fallback: Prompt to open/save vCard
+  const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+  const filename = `${(cleanName || "contact").replace(/[^a-zA-Z0-9_-]/g, "_")}.vcf`;
   const downloadLink = document.createElement("a");
   const url = URL.createObjectURL(blob);
   downloadLink.href = url;
@@ -296,7 +354,7 @@ function downloadVCard() {
   document.body.removeChild(downloadLink);
   URL.revokeObjectURL(url);
 
-  showToast("Contact card saved to downloads");
+  showToast("Opening contact file...");
 }
 
 /**
