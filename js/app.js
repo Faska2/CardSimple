@@ -13,7 +13,7 @@ const profile = {
   jobTitle: "Financial Performance Analyst",
   company: "AXA",
   logo: "assets/logo.png",
-  profileImage: "assets/profile.jpg",
+  profileImage: "assets/profile.png",
   phone: "+33 7 59 53 53 64",
   email: "hamza.aitayach@axa.com",
   whatsapp: "+33 7 59 53 53 64",
