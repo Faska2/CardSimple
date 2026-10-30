@@ -87,15 +87,19 @@ body {
 /* Desktop Presentation styling */
 @media (min-width: 540px) {
   body {
-    padding: 30px 16px;
+    padding: 24px 16px;
+    height: 100vh;
+    overflow-y: auto;
   }
   
   .card-viewport {
-    min-height: auto;
+    height: 820px;
+    max-height: calc(100vh - 48px);
     border-radius: 38px;
     border: 1px solid var(--card-border);
     box-shadow: var(--shadow-card);
     overflow: hidden;
+    position: relative;
   }
 }
 
@@ -258,8 +262,8 @@ body {
 }
 
 .contact-circle-btn {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background-color: var(--btn-white);
   color: var(--btn-dark-icon);
@@ -385,7 +389,7 @@ body {
 
 /* --- 5. Bottom Action Bar (Fixed / Docked) --- */
 .bottom-action-bar-container {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -393,6 +397,15 @@ body {
   padding: 14px 24px calc(var(--safe-bottom) + 6px);
   background: linear-gradient(to top, #000000 70%, rgba(0, 0, 0, 0.85) 85%, rgba(0, 0, 0, 0) 100%);
   pointer-events: none;
+}
+
+@media (min-width: 540px) {
+  .bottom-action-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .bottom-action-bar {

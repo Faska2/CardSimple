@@ -9,22 +9,22 @@
  */
 
 const profile = {
-  fullName: "John Richards",
-  jobTitle: "Marketing Manager",
-  company: "Teamwork.Co",
+  fullName: "Hamza Ait Ayach",
+  jobTitle: "Financial Performance Analyst",
+  company: "AXA",
   logo: "assets/logo.png",
   profileImage: "assets/profile.jpg",
-  phone: "+212600000000",
-  email: "john@example.com",
-  whatsapp: "+212600000000",
-  website: "https://example.com",
-  biography: "Hi, I am Flody, working as marketing manager at Teamwork.co",
-  address: "Agadir, Morocco",
+  phone: "+33600000000",
+  email: "hamza.aitayach@axa.com",
+  whatsapp: "+33600000000",
+  website: "https://www.axa.com",
+  biography: "Financial Performance Analyst at AXA specializing in FP&A, Corporate Controlling, EPM & Analytics, and Finance Transformation. Alumnus of ICN Business School.",
+  address: "Paris, France",
   socialLinks: {
+    linkedin: "https://www.linkedin.com/in/hamza-ait-ayach-/",
+    x: "",
     instagram: "",
-    linkedin: "",
-    facebook: "",
-    x: ""
+    facebook: ""
   }
 };
 
@@ -167,6 +167,18 @@ function renderProfile() {
     btnWhatsapp.style.display = "none";
   }
 
+  // LinkedIn
+  const btnLinkedin = document.getElementById("btn-linkedin");
+  if (btnLinkedin) {
+    if (profile.socialLinks && profile.socialLinks.linkedin && profile.socialLinks.linkedin.trim() !== "") {
+      btnLinkedin.href = profile.socialLinks.linkedin.trim();
+      btnLinkedin.style.display = "flex";
+      visibleContactButtons++;
+    } else {
+      btnLinkedin.style.display = "none";
+    }
+  }
+
   // Hide entire contact buttons section if all are empty
   const contactSection = document.querySelector(".contact-actions-section");
   if (visibleContactButtons === 0 && contactSection) {
@@ -190,6 +202,9 @@ function renderProfile() {
   if (profile.socialLinks && typeof profile.socialLinks === "object") {
     socialContainer.innerHTML = "";
     for (const [platform, url] of Object.entries(profile.socialLinks)) {
+      if (platform.toLowerCase() === "linkedin" && btnLinkedin && btnLinkedin.style.display !== "none") {
+        continue;
+      }
       if (url && url.trim() !== "") {
         hasSocialLinks = true;
         const linkBtn = document.createElement("a");
